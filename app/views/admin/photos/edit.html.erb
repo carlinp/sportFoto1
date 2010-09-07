@@ -1,0 +1,56 @@
+<h1>Editing photo</h1>
+
+<% form_for(@photo) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :filename %><br />
+    <%= f.text_field :filename %>
+  </p>
+  <p>
+    <%= f.label :path %><br />
+    <%= f.text_field :path %>
+  </p>
+  <p>
+    <%= f.label :startnumber %><br />
+    <%= f.text_field :startnumber %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :fingerprint %><br />
+    <%= f.text_field :fingerprint %>
+  </p>
+  <p>
+    <%= f.label :is_processed %><br />
+    <%= f.check_box :is_processed %>
+  </p>
+  <p>
+    <%= f.label :is_approved %><br />
+    <%= f.check_box :is_approved %>
+  </p>
+  <p>
+    <%= f.label :is_processing %><br />
+    <%= f.check_box :is_processing %>
+  </p>
+  <p>
+    <%= f.label :has_startnumber %><br />
+    <%= f.check_box :has_startnumber %>
+  </p>
+  <p>
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </p>
+  <p>
+    <%= f.label :currency %><br />
+    <%= f.text_field :currency %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @photo %> |
+<%= link_to 'Back', admin_photos_path %>

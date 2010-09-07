@@ -1,0 +1,37 @@
+
+<script type="text/javascript">
+  $(function(){
+    $("#nagyit").button();
+    $("#eredeti").button();
+  });
+
+  function onNagyit() {
+    $("#image").css("width", 1024);
+  }
+
+  function onEredeti( w ) {
+    $("#image").attr("width", w);
+    $("#image").css("width", w);
+    $("#image").attr("src", "/admin/tag/show/?id=<%=@photo.id%>");
+  }
+
+</script>
+
+<% if @photo != nil %>
+<%= image_tag "/admin/tag/show_midsize/?id=#{@photo.id}", :id => "photo-#{@photo.id}-image", :width=>"800px" , :id=>"image"%>
+<br />
+<p><%= @photo.filename %>, <%= @photo.price %> HUF-ra arazva.</p>
+<% if @photo.exif != nil %>
+<p><%= @photo.exif.model %>, <%= @photo.exif.width %>x<%= @photo.exif.height %>, <%= @photo.exif.date_time %></p>
+<button id="eredeti" onclick="onEredeti(<%= @photo.exif.width %>);">Eredeti</button>
+<% end %>
+<button id="nagyit" onclick="onNagyit();">Nagyit</button>
+<form action="/admin/tag" method="post">
+  <input type="hidden" name="id" value="<%=@photo.id %>" />
+  <input type="text" name="startnumber" value="" />
+  <input type="checkbox" name="approve" checked="true" />
+  <input type="submit" value="kovetkezot"/>
+</form>
+<% else %>
+<p>Nincs tobb ellenorizetlen kep.</p>
+<% end %>

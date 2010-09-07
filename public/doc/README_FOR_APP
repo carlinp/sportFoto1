@@ -1,0 +1,55 @@
+Use this README file to introduce your application and point to useful places in the API for learning more.
+Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+
+
+maps api key
+
+ABQIAAAAG-e2-oBuPl20pg84inwp8BR_RaLOpqPkRiJpdUAwC9gy1rco0BQvP6fosxHYWvV4rzk7lSPrB2PbIg
+
+paypal cert id JRZFW6ZYHTB66
+
+todos:
+
+prerelease (planned 2010.02.12)
+
+ [x] be able to register as photographer
+ [x] login interface for photographers
+ [x] photographers review personal details
+ [x] photographers upload avatar
+ [x] photographers select existing event and upload multiple files (photos) to the event
+ [x] create public thumbnail images of uploaded files
+ [x] browse all photos per event (thumbnail size only)
+ [x] paging [quite primitive but working]
+ [x] store and display exif data
+ [x] shopping cart, place photos to cart
+ [x] cart checkout
+ [x] pay by paypal
+ [x] grant download of images | order them on CD
+ [ ] review cart, distinguish between image categories, price each photo by category and display sum
+ [ ] link in facebook, twitter, buzz, etc
+ [ ] register for shopping
+ [ ] download to picasa, flickr, facebook albums
+ [ ] list/display uploaded images [progress] in upload
+
+version 1 planned 2010.02.28
+
+ [ ] administrator login, basic roles of admin and photographer
+ [ ] apply watermark on public thumbnail images
+ [ ] administrator approve submitted events
+ [ ] administrator approve photographer registrations
+ [ ] multiple administrators categorize, approve and delete photos per event
+ [ ] multiple administrators apply startnumber to photos
+ [ ] search for startnumbers per event
+ [ ] browse photos per category per event
+
+version 2 planned 2010.04.01
+
+ [ ] photographers set event types they shoot
+ [ ] list previously purchased items
+ [ ] administrator list purchased items per photographer
+ [ ] administrator set payment statuses made to photographers (pending, liquidated)
+ [ ] photographer list purchased items
+ [ ] photographer review payments
+
+     (payments to photographers will be made by paypal only, valid paypal account is mandatory for each photographer)
+

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    
+    <%= stylesheet_link_tag 'general' %>
+    <%= stylesheet_link_tag 'bubbles' %>
+    <%= stylesheet_link_tag controller.controller_name %>
+    <%=  stylesheet_link_tag "/javascripts/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css" %>
+
+    <%=  javascript_include_tag "jquery-ui/js/jquery-1.4.2.min" %>
+    <%=  javascript_include_tag "jquery-ui/js/jquery-ui-1.8.1.custom.min" %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag controller.controller_name %>
+
+    <script type="text/javascript">
+      $(function(){
+          $("#random-1").load('<%= photos_path %>/random/1');
+          $('#cart').load('<%= cart_path %>/show');
+      });
+    </script>
+
+    <%= yield :head %>
+  </head>
+  <body>
+    <div id="site">
+      <div id="header" class="">
+        <div id="header-randoms" class="fl">
+          <div class="randomphoto" id="random-1"></div>
+        </div>
+        <div id="cart" class="box2 fr grrl">
+        </div>
+        <div id="header-helpbox" class="box2 fr grlr">
+        <h1 style="text-align: left; margin-left: 8px"><%= link_to $app_config['site_name'], root_url %></h1>
+        <p style="margin: 8px; text-align: left">Futás, triatlon, kerékpár, motor- vagy vízisportok? Részt vettél egy rangos, sok embert vonzó sporteseményen?</p>
+        <p style="text-align: left; color: yellow; margin: 8px;" onclick="javascript: $('#cart').toggle();">Nálunk igazán könnyen és egyszerűen, regisztráció nélkül juthatsz hozzá a rólad vagy barátaidról készült képekhez!</p>
+        </div>
+      </div>
+
+      <div id="main">
+        <div id="menu" class="">
+          <ul>
+            <li><span class="ui-icon ui-icon-image fl">&nbsp;</span><%= link_to 'Képek', events_path %></li>
+            <li><span class="ui-icon ui-icon-calculator fl">&nbsp;</span><a href="">Árak</a></li>
+            <li><span  class="ui-icon ui-icon-tag fl">&nbsp;</span><%= link_to 'Sportok', event_types_path %></li>
+            <li><span  class="ui-icon ui-icon-person fl">&nbsp;</span><%= link_to 'Fotósoknak', photographers_path %></li>
+            <li><span  class="ui-icon ui-icon-mail-closed fl">&nbsp;</span><%= link_to 'Kapcsolat', contact_path %></li>
+          </ul>
+        </div>
+        <div id="credentials">
+          <%= render :partial => "shared/credentials" %>
+        </div>
+        <div id="content" class="box1">
+          <%= yield %>
+        </div>
+        <div id="static-content">
+          <div>
+            <p>Nem látod itt a kedvenc versenyed? <%= link_to 'Add meg a részleteket!', new_event_path %></p>
+            <p>Fotózol, fotóznál esetleg fotóztál versenyen es szeretnéd a képeidet itt látni ? <%= link_to 'Jelentkezz!', new_photographer_path %></p>
+          </div>
+        </div>
+        <div id="cart-summary">
+          <%= render :partial => "shared/cart_count" %>
+        </div>
+      </div>
+
+      <div id="footer">
+        <img src="http://asset-0.kenai.com/images/jruby.png?20100127.c5638cb" />
+        <img src="http://asset-3.kenai.com/images/rails.png?20100127.c5638cb" />
+        <img src="http://asset-3.kenai.com/images/mysql.png?20100127.c5638cb" />
+        <img src="http://asset-1.kenai.com/images/glassfish.png?20100127.c5638cb" />
+      </div>
+    </div>
+  </body>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17999070-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</html>

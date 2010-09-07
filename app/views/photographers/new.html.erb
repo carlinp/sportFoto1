@@ -1,0 +1,56 @@
+<h1>Jelentkezési lap</h1>
+
+<p>
+  Érdekelnek a sportok, szívesen fotózol, esetleg van már egy halom képed is? Gyere, töltsd fel őket hozzánk és keress egy kis pénzt!
+</p>
+<p>
+  Töltsd ki ezt a rövid jelentkezési lapot. Add meg az e-mail címed (később ezzel fogsz bejelentkezni is), ahol regisztrációd véglegesítése végett elérhetünk.
+  Örülünk, ha megadod a weboldalad, telefonszámod, vagy lakcímed is.
+</p>
+<p>
+  Miután véglegesítettük a regisztrációd, máris elkezdheted feltölteni és árulni a képeidet. 
+</p>
+
+<% form_for @photographer do |f| %>
+  <% if f.error_messages.size > 0 %>
+      <!-- Highlight / Error -->
+      <div class="ui-widget">
+              <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+                      <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                      <strong>Hopsz!</strong> <%= f.error_messages :header_message => "Sajnos néhány adatot nem tudunk elfogadni!", :message=>"Kérünk javítsd őket." %> </p>
+              </div>
+      </div>
+  <% end %>
+  
+  <% f.fields_for :user do |user_form| %>
+  <p>
+    E-mail<br />
+    <%= user_form.text_field :email %>
+  </p>
+
+  <p>
+    Jelszó<br />
+    <%= user_form.password_field :password %>
+  </p>
+  <% end %>
+
+  <p>
+    Keresztnév<br />
+    <%= f.text_field :firstname %>
+  </p>
+
+  <p>
+    Vezetéknév<br />
+    <%= f.text_field :lastname %>
+  </p>
+
+  <p>
+    Cím, weboldal, egyéb <br />
+    <%= f.text_area :contact , :rows => 5, :columns => 30 %>
+  </p>
+
+  <p>
+    <%= f.submit 'Jelentkezem' %>
+  </p>
+<% end %>
+

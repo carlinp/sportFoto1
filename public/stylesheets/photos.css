@@ -1,0 +1,120 @@
+/* 
+    Document   : photos
+    Created on : Feb 8, 2010, 10:37:37 AM
+    Author     : spike
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+#event-summary {
+    display: block;
+    height: 150px;
+    clear: both;
+    padding: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+#event-summary .event {
+    margin-top: 0px;
+}
+#search form .button {
+    float: right;
+}
+
+#photos {
+    display: block;
+    clear: both;
+    margin: 0px 0px 10px 0px;
+    padding: 10px 0px 10px 0px;
+}
+
+#photos img {
+    border: 1px solid black;
+}
+
+#photos .photo {
+    float: left;
+    width: 302px;
+    margin-top: 4px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+#photos .photo .image {
+    position: relative;
+    width: 300px;
+    height: 200px;
+}
+
+
+#photos .photo .image .data {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    text-align: left;
+    padding-left: 16px;
+    font-weight: bold;
+}
+
+#photos .photo .image img {
+}
+
+#photos .photo .left {
+    position: relative;
+    float: left;
+    left: 5px;
+    text-align: left;
+    width: 150px;
+}
+
+#photos .photo .right {
+    position: relative;
+    float: right;
+    right: 5px;
+    text-align: right;
+    width: 150px;
+}
+
+#photos .left {
+    margin-right: 4px;
+}
+
+#photos .middle {
+    
+}
+
+#photos .right {
+    margin-left: 4px;
+}
+
+#photos .photo .data {
+    width: 320px;
+    height: 100px;
+    position: relative;
+    bottom: 100px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 10px;
+    padding: 4px;
+    opacity: 0.9;
+}
+
+#pager {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    clear: both;
+}
+
+#pager span {
+    display: table;
+    position: relative;
+    float: left;
+    width: 31%;
+    margin: 0px;
+    padding: 5px;
+}

@@ -1,0 +1,76 @@
+<% content_for :head do %>
+  <%=  javascript_include_tag "jquery.scrollToElement" %>
+  <script type="text/javascript">
+    $(function(){
+      $("#searchbutton").button({
+        icons: {
+          primary: 'ui-icon-search'
+        }
+      });
+
+      $.ajax({
+        url: '<%= events_path %>.xml',
+        success: function(xmlResponse) {
+          var data = $("event", xmlResponse).map(function () {
+            return { value: $("title", this).text(),
+                     id: $("id", this).text()
+                   }
+          }).get();
+          $('#searchbar').autocomplete({
+            minLength: 0,
+            source: data
+//            select: function(event, ui) {
+//             log(ui.item ? ("Selected: " + ui.item.value + ", geonameId: " + ui.item.id) : "Nothing selected, input was " + this.value);
+//            }
+          });
+        }
+      });
+
+    });
+
+    function openContent(id,url) {
+        $("#event-content-"+id).load(url);
+        $("#event-content-"+id).toggle();
+    }
+
+    function search() {
+      var searchterm = document.getElementById('searchbar').value;
+//      $(".event.a:contains("+searchterm+")").css("color", "red");
+      var el = $(".event-title:contains('"+searchterm+"')").first();
+      el.scrollTo();
+      el.show("pulsate");
+    }
+
+  </script>
+
+<% end %>
+
+<% if flash[:notice] %>
+      <div class="ui-widget">
+              <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+                      <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                        <strong>Szia!</strong>&nbsp;<%= flash[:notice] %></p>
+              </div>
+
+      </div>
+<% end %>
+
+<input type="text" id="searchbar" name="search" value="" />
+<button id="searchbutton" onclick="javascript: search();">Keres</button>
+
+<% @events.each do |event| %>
+
+  <div class="event">
+    <p class="event-title"><%= link_to event.title, event_photos_path(event) %></p>
+    <p class="event-start"><%=h event.event_start.strftime("%Y. %m. %d.") %>, <%= event.location %></p>
+    <p><%= event.event_type.name %>, 
+      <strong><%= event.approved_photos_count %> kép</strong>
+      <a href="#event-<%=h event.id %>" onclick="openContent(<%=h event.id %>,'<%=event_path(event)%>')"> Részletek </a>
+    </p>
+    <div id="event-content-<%=h event.id %>" style="display: none">
+    </div>
+  </div>
+<% end %>
+
+<br style="clear: both;" />
+

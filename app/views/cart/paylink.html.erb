@@ -1,0 +1,15 @@
+<style type="text/css">
+  #dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+  #dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+</style>
+
+<p>
+<%=  link_to "<span class='ui-icon ui-icon-calculator'></span>Fizetés (#{@cart.total_price} HUF)",
+             @cart.paypal_url(cart_url+"/download/"+@cart.carthash, $app_config['site_url']+payment_notifications_path ),
+             :class => "ui-state-default ui-corner-all", :id=>"dialog_link"
+
+%>
+</p>
+
+
+

@@ -1,0 +1,5 @@
+<% if ( @photo != nil )  %>
+<%= image_tag "photos/#{@photo.event_id}/#{@photo.fingerprint}.jpg",
+              :id => "random-photo-#{@photo.id}-image" 
+%>
+<% end %>

@@ -1,0 +1,6 @@
+<% @photos.each do |photo| %>
+
+  <%= image_tag "photos/#{photo.event_id}/#{photo.fingerprint}.jpg", :id => "photo-#{photo.id}-image", :width=>"100px", :height=>"75px" %>
+
+
+<% end %>

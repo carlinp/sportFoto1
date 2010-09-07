@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  description: MyText
+  banner: MyString
+  gps: MyString
+  fingerprint: MyString
+  event_start: 2010-08-15 10:28:24
+  event_end: 2010-08-15 10:28:24
+  event_type_id: 1
+  is_approved: false
+  location: MyString
+
+two:
+  title: MyString
+  description: MyText
+  banner: MyString
+  gps: MyString
+  fingerprint: MyString
+  event_start: 2010-08-15 10:28:24
+  event_end: 2010-08-15 10:28:24
+  event_type_id: 1
+  is_approved: false
+  location: MyString

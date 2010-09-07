@@ -1,0 +1,2 @@
+module Admin::PhototaggerHelper
+end

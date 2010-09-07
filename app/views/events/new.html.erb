@@ -1,0 +1,47 @@
+<script type="text/javascript">
+  $(function(){
+     $('#event_event_start').datepicker({
+       inline: true
+     });
+     $('#event_event_end').datepicker({
+       inline: false
+     });
+  });
+</script>
+<h1>Új esemény</h1>
+
+<% form_for(@event) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    Az esemény neve<br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    Az esemény jellege<br/>
+      <%= f.collection_select :event_type_id, EventType.all, :id, :name  %>
+  </p>
+  <p>
+    Pár szó az eseményről, weboldal, elérhetőség, stb<br />
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    Helyszín GPS koordinátái (ha tudjuk)<br />
+    <%= f.text_field :gps %>
+  </p>
+  <p>
+    Helyszín címe<br/>
+    <%= f.text_field :location %>
+  </p>
+  <p>
+    Esemény kezdete <br />
+    <%= f.text_field :event_start %>
+  </p>
+  <p>
+    Esemény vége<br />
+    <%= f.text_field :event_end %>
+  </p>
+  <p>
+    <%= f.submit 'Mehet' %>
+  </p>
+<% end %>

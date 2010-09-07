@@ -1,0 +1,134 @@
+<%#
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "events"  %>
+  <title>
+    <%=h @event.title %>, <%=h @event.location %> <%=h @event.event_start.year %> képek
+  </title>
+
+  <script type="text/javascript">
+    $(function(){
+      $(".basket").button({
+        icons: {
+          primary: 'ui-icon-cart'
+        }
+      });
+      $(".detail").button({
+        icons: {
+          primary: 'ui-icon-document'
+        }
+      });
+      $("#searchbutton").button({
+        icons: {
+          primary: 'ui-icon-search'
+        }
+      });
+    });
+  </script>
+
+<% end %>
+
+<div id="event-summary">
+  <div class="event">
+    <p class="event-title"><%=h @event.title %>, <%=h @event.location %></p>
+    <p class="event-start"><%=h @event.event_start.strftime("%Y. %m. %d.") %></p>
+    <iframe src="http://www.facebook.com/plugins/like.php?href=<%= event_photos_url(@event) %>&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"> </iframe>
+  </div>
+</div>
+
+<div id="search">
+  <% form_tag(event_photos_path(@event), :method => "get" ) do %>
+    <input type="text" id="searchbar" name="search" value="Rajtszámod" onclick="if (this.value=='Rajtszámod') { this.value=''; return false }"/>
+    <button id="searchbutton">Keres</button>
+  <% end %>
+</div>
+
+<div id="photos">
+  <% @photos.each do |photo| %>
+  <div id="photo-<%=h photo.id %>"class="photo <%=cycle('left','middle','right')%>">
+    <div class="image">
+      <% if photo.exif != nil %>
+        <div id="photo-<%=h photo.id %>-data" class="data" style="display: none;">
+          <% if photo.photographer.is_public %>
+            <p>Fotós: <%= photo.photographer.firstname %>, <%= photo.photographer.lastname %></p>
+          <% end %>
+          <p>Model: <%=h photo.exif.model %> </p>
+          <p><%=h photo.exif.width %>x<%=h photo.exif.height %></p>
+          <p><%=h photo.exif.date_time %></p>
+          <p>Shutter: <%=h photo.exif.exposure_time %></p>
+          <p>F <%=h photo.exif.f_number %></p>
+        </div>
+      <% end %>
+      <%= image_tag "photos/#{photo.event_id}/#{photo.fingerprint}.jpg",
+                    :id => "photo-#{photo.id}-image",
+                    :onclick => "openPhotoDialog('#{cart_path}/add/#{photo.id}',#{photo.id});"
+      %>
+    </div>
+    <div class="fl">      
+      <p><strong><%= photo.startnumber %></strong>
+      <% if photo.exif != nil %>
+        <%=h photo.exif.width %>x<%=h photo.exif.height %></p>
+        <button class="detail" onclick="javascript: jqshowDetails(<%=h photo.id %>);">Részletek</button>
+      <% else %>
+        </p>
+      <% end %>
+    </div>
+    <div class="fr">
+      <p><strong><%=h photo.price %> HUF</strong></p>
+        <p>
+          <button class="basket" onclick="javascript: putToCart('<%= cart_path %>/add/<%= photo.id %>',<%=h photo.id %>);">Kosárba</button>
+        </p>
+    </div>
+  </div>
+  <div id="photo-dialog-<%= photo.id %>" style="display: none;" title="Részletek">
+    <div class="fl">
+      <% if photo.exif != nil %>
+        <div style="text-align: left; width: 250px;">
+          <p>
+            <strong>
+              Ez a méret csak egy minta. A fotót megvásárolhatod poszter méretben (<%=h photo.exif.width %>x<%=h photo.exif.height %> pixel).
+            </strong><br/>
+            További információk a képről:
+          </p>
+          <% if photo.photographer.is_public %>
+            <p>Fotós: <%= photo.photographer.firstname %>, <%= photo.photographer.lastname %></p>
+          <% end %>
+          <p>Model: <%=h photo.exif.model %> </p>
+          <p><%=h photo.exif.width %>x<%=h photo.exif.height %></p>
+          <p><%=h photo.exif.date_time %></p>
+          <p>Shutter: <%=h photo.exif.exposure_time %></p>
+          <p>F <%=h photo.exif.f_number %></p>
+          <% if photo.price==0 %>
+          <p>Ezt a képet máris <strong><a href="/photos/download/<%=photo.id%>">letöltheted</a></strong></p>
+          <% end %>
+        </div>
+      <% end %>
+
+    </div>
+    <div class="fr">
+      <%= image_tag "photos/#{photo.event_id}/#{photo.fingerprint}.jpg", :id => "photo-#{photo.id}-image" %>
+    </div>
+    <div style="clear: both;">
+      <iframe src="http://www.facebook.com/plugins/like.php?href=<%= photos_url %>/show/<%=photo.id%>&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"> </iframe>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+<div id="pager">
+  <span><%
+    if @current_page > 1
+    %><%=link_to "Előző oldal", event_photos_path(@event, :params=>{:page=>@current_page-1}) %><%
+    else
+    %>&nbsp;<%
+    end
+  %></span>
+  <span style="text-align: center;"><%=h @current_page %> / <%=h @max_page %></span>
+  <span style="text-align: right;"><%
+    if @current_page < @max_page
+    %><%=link_to "Következő oldal", event_photos_path(@event, :params=>{:page=>@current_page+1}) %><%
+    end
+  %></span>
+</div>

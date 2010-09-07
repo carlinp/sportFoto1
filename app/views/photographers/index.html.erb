@@ -1,0 +1,55 @@
+<h1>Fotósoknak</h1>
+
+<% if session[:user_id] == nil %>
+<div style="clear: both" >
+  <h5>Regisztráltál már? Lépjél be!</h5>
+  <% form_tag(login_path, :method => "post") do %>
+    <label for="loginform_email">Email: </label>
+    <%= text_field "loginform", "email" %>
+    <label for="loginform_password">Jelszó: </label>
+    <%= password_field "loginform", "password" %>
+    <input type="submit" value="Belépés"/>
+  <% end %>
+</div>
+<% end %>
+
+<div class="fl" style="width: 60%">
+  <h2>Add el a képeidet!</h2>
+  <p>
+    Nagyon egyszerű az egész.
+  <ol>
+    <li><%= link_to 'Jelentkezz', new_photographer_path %></li>
+    <li>Menj el egy versenyre (amiknek az idejét és helyét az oldalon megtalálod), vagy <%= link_to 'jelezd nekünk', new_event_path %> ha nem találnád, és felvesszük</li>
+    <li>Fotózz minnél többet!</li>
+    <li>Töltsd fel a képeket, szabd meg az árukat magad vagy bízd ránk ezt is. A képeken látható rajtszámokat mi beazonosítjuk neked.</li>
+    <li>Dőlj hátra és várd a vásárlókat. Már az első eladott kép után kérhetsz kifizetést. Nálunk az eladott képeid után akár <strong>70%</strong> részesedést is kaphatsz!</li>
+  </ol>
+  </p>
+  <p>
+    Jól hangzik ? Kérdésed van?  Tedd fel nekünk !
+  </p>
+</div>
+
+<div class="fr" style="width: 30%">
+  <h2>Fotósaink</h2>
+  <% @photographers.each do |photographer| %>
+  <div class="photographer">
+    <h3><%=h photographer.firstname%>, <%=h photographer.lastname %></h3>
+    <p><strong><%= photographer.photos.count %> feltöltött kép</strong></p>
+    <p>
+      <% if photographer.avatar? %>
+      <%= image_tag '../uploads/'+photographer.avatar, :width => '100px' %>
+      <% end %>
+    <ul>
+      <% photographer.event_types.each do |event_type| %>
+      <li><%=h event_type.name %></li>
+      <% end %>
+    </ul>
+    </p>
+  </div>
+  <% end %>
+</div>
+
+
+
+<br style="clear: both;" />

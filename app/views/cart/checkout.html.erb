@@ -1,0 +1,77 @@
+<% content_for :head do %>
+  <%=  javascript_include_tag "jquery-ui/js/jquery-1.4.2.min" %>
+  <%=  javascript_include_tag "jquery-ui/js/jquery-ui-1.8.1.custom.min" %>
+  <%=  stylesheet_link_tag "/javascripts/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css" %>
+  <script type="text/javascript">
+    $(function(){
+      $("#accordion").accordion({ header: "h3", autoHeight: false, collapsible: true, active: 1 });
+      $(".remove").button({
+        icons: {
+          primary: 'ui-icon-trash'
+        }
+      });
+    });
+  </script>
+
+  <style type="text/css">
+    #accordion h3 a:hover {
+      background-color: #cccccc;
+    }
+  </style>
+<% end %>
+
+<h1> Vásárlás </h1>
+
+<p>
+  Nézd át a rendelésed, ha elkészültél, kattints a fizetés pontra!
+</p>
+
+<div id="accordion">
+  <div> <!-- kosar accordion div -->
+    <h3><a href="#" id="cart-summary">A kosarad: <%= @photos.count %> kép, összesen <%= @cart.total_price %> HUF</a></h3>
+    <div>
+      <button class="remove" onclick="removeall('<%= cart_path %>','<%= cart_url %>');">Mindet kiveszem</button>
+      
+      <% @cart.cart_items.each do |cart_item| %>
+      <p style="clear: both;" id="cart-item-<%= cart_item.photo.id %>">
+        <%= image_tag "photos/#{cart_item.photo.event_id}/#{cart_item.photo.fingerprint}.jpg", :width => "100px", :style => "float: left; margin: 5px; border: 1px solid black;" %>
+        <strong><%= cart_item.photo.filename %> <%= cart_item.photo.startnumber %> <%= cart_item.photo.exif.width %>x<%= cart_item.photo.exif.height %> <%= cart_item.photo.price %> HUF </strong><br/>
+        <button class="remove" onclick="remove('<%=  cart_path %>',<%=cart_item.photo.id %>);">Kiveszem</button>
+      </p>
+      <% end %>
+
+
+    </div>
+  </div>
+
+  <% if @cart.total_price == 0 %>
+    <div> <!-- download accordion div -->
+      <h3><a href="#">Letöltés</a></h3>
+      <div>
+        <p>
+          Mivel csupa ingyenes képet választottál, rögtön letöltheted őket.
+        </p>
+        <p id="cart-pay-link">
+          <%= link_to 'Letöltés', cart_url+"/download/"+@cart.carthash %>
+        </p>
+      </div>
+    </div>
+  <% else %>
+    <div> <!-- fizetes accordion div -->
+      <h3><a href="#">Fizetés</a></h3>
+      <div>
+        <p>
+          Az alábbi linkre kattintva a PayPal oldalán tudsz fizetni.
+        </p>
+        <p id="cart-pay-link">
+          <script type="text/javascript">
+            $("#cart-pay-link").load('<%=  cart_path %>/paylink');
+          </script>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<br style="clear: both;" />
+

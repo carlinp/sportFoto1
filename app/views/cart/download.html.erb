@@ -1,0 +1,113 @@
+<% content_for :head do %>
+  <%=  javascript_include_tag "jquery-ui/js/jquery-1.4.2.min" %>
+  <%=  javascript_include_tag "jquery-ui/js/jquery-ui-1.8.1.custom.min" %>
+  <%=  stylesheet_link_tag "/javascripts/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css" %>
+
+  <script type="text/javascript">
+    $(function(){
+      $("#accordion").accordion({ header: "h3", autoHeight: false, collapsible: true, active: 1 });
+      $("#email_me_button").button({
+        icons: {
+          primary: 'ui-icon-mail-closed'
+        }
+      });
+
+      $('#email_me_dialog').dialog({
+              autoOpen: false,
+              width: 600,
+              buttons: {
+                      "Küldés": function() {
+                              $(this).dialog("close");
+                      },
+                      "Mégsem": function() {
+                              $(this).dialog("close");
+                      }
+              }
+      });
+
+      $('#email_me_button').click(function(){
+					$('#email_me_dialog').dialog('open');
+					return false;
+      });
+      $('#email_me_link').click(function(){
+					$('#email_me_dialog').dialog('open');
+					return false;
+				});
+
+    });
+  </script>
+
+  <style type="text/css">
+    #accordion h3 a:hover {
+      background-color: #cccccc;
+    }
+    #download a:hover {
+      color: #fff;
+    }
+
+  </style>
+
+<% end %>
+
+<h1>Letöltés</h1>
+<p>
+  Megvásárolt képeidet itt letöltheted a számítógépedre, feltöltheted online fotóalbumodba, megoszthatod kedvenc közösségi oldaladon.
+</p>
+<p>
+  Kosarad tartalmát megőrizzük. Ezen a linken mindig megtalálod.<br/>
+  <%= link_to cart_url+"/download/"+@cart.carthash %> <br/>
+  Ha szeretnéd, emlékeztetőnek elküldjük neked ezt a linket e-mailben is.
+  E-mail címedet nem tároljuk el.
+</p>
+<p>
+  <button id="email_me_button">Igen, kérek e-mail emlékeztetőt</button>
+</p>
+<div id="email_me_dialog" title="Kosáremlékeztető küldése">
+  <p>
+    <label for="email_address">E-mail címem</label>
+    <input type="text" id="email_address" />
+  </p>
+</div>
+
+<% if @cart.is_paid %>
+<h2>  Fizetve. </h2>
+
+<div id="accordion">
+  
+  <div> <!-- Download one-by-one accordion -->
+    <h3><a href="#">Egyenkénti letöltés, megosztás</a></h3>
+    <div>
+      <% @cart.cart_items.each do |cart_item| %>
+      <p style="clear: both;">
+        <%= image_tag "photos/#{cart_item.photo.event_id}/#{cart_item.photo.fingerprint}.jpg", :width => "100px", :style => "float: left; margin: 5px; border: 1px solid black;" %>
+        <strong><%= cart_item.photo.filename %> <%= cart_item.photo.startnumber %> </strong><br/>
+        <%= cart_item.photo.exif.width %>x<%= cart_item.photo.exif.height %> <br/>
+        <strong><%= cart_item.photo.price %> HUF </strong><br/>
+        <%=link_to 'Download', photos_path+'/download/'+cart_item.photo.id.to_s+'?carthash='+@cart.carthash %>
+        |Facebook|Picasa|Twitter|Flickr|Indafoto|Whatever
+      </p>
+      <% end %>
+    </div>
+  </div>
+  
+  <div> <!-- Download zip accordion -->
+    <h3><a href="#">Letöltés ZIPben</a></h3>
+    <div id="download">
+      <p>Kérlek várj, amíg csomagoljuk a rendelésed!</p>
+      <script type="text/javascript">
+        $(function(){
+          $('#download').load('<%= cart_path %>/bundle/<%=@cart.id %>');
+        });
+      </script>
+    </div>
+  </div>
+
+</div>
+<br style="clear:both;"/>
+
+
+<% else %>
+<p>  Nincs még fizetve. Ha fizettél, frissítgesd ezt az oldalt, amíg megérkezik hozzánk a pénzed. Köszike!</p>
+
+<% end %>
+

@@ -1,0 +1,35 @@
+<h1>Listing photographers</h1>
+
+<table>
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Contact</th>
+    <th>Is approved</th>
+    <th>Is active</th>
+    <th>Is public</th>
+    <th>Avatar</th>
+    <th>Paypal address</th>
+  </tr>
+
+<% @photographers.each do |photographer| %>
+  <tr>
+    <td><%=h photographer.firstname %></td>
+    <td><%=h photographer.lastname %></td>
+    <td><%=h photographer.contact %></td>
+    <td><%=h photographer.is_approved %></td>
+    <td><%=h photographer.is_active %></td>
+    <td><%=h photographer.is_public %></td>
+    <td><%=h photographer.avatar %></td>
+    <td><%=h photographer.paypal_address %></td>
+    <td><%= link_to 'Show', photographer %></td>
+    <td><%= link_to 'Edit', :controller=>'admin/photographers', :action=>'edit', :id=>photographer.id %></td>
+    <td><%= link_to 'Destroy', photographer, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New photographer', :controller=>"admin/photographers", :action=>"new"%>
+<%= link_to 'Back to site', events_path %>

@@ -1,0 +1,58 @@
+<p>
+  <b>Filename:</b>
+  <%=h @photo.filename %>
+</p>
+
+<p>
+  <b>Path:</b>
+  <%=h @photo.path %>
+</p>
+
+<p>
+  <b>Startnumber:</b>
+  <%=h @photo.startnumber %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @photo.description %>
+</p>
+
+<p>
+  <b>Fingerprint:</b>
+  <%=h @photo.fingerprint %>
+</p>
+
+<p>
+  <b>Is processed:</b>
+  <%=h @photo.is_processed %>
+</p>
+
+<p>
+  <b>Is approved:</b>
+  <%=h @photo.is_approved %>
+</p>
+
+<p>
+  <b>Is processing:</b>
+  <%=h @photo.is_processing %>
+</p>
+
+<p>
+  <b>Has startnumber:</b>
+  <%=h @photo.has_startnumber %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%=h @photo.price %>
+</p>
+
+<p>
+  <b>Currency:</b>
+  <%=h @photo.currency %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_photo_path(@photo) %> |
+<%= link_to 'Back', admin_photos_path %>

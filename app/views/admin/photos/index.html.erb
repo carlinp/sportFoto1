@@ -1,0 +1,44 @@
+<h1>Listing photos</h1>
+
+<table>
+  <tr>
+    <th>thumbnail</th>
+    <th>Filename</th>
+    <th>Path</th>
+    <th>Startnumber</th>
+    <th>Description</th>
+    <th>Fingerprint</th>
+    <th>Is processed</th>
+    <th>Is approved</th>
+    <th>Is processing</th>
+    <th>Has startnumber</th>
+    <th>Price</th>
+    <th>Currency</th>
+  </tr>
+
+<% @photos.each do |photo| %>
+  <tr>
+    <td>
+        <%= image_tag "photos/#{photo.event_id}/#{photo.fingerprint}.jpg", :id => "photo-#{photo.id}-image", :width=>"100px", :height=>"75px" %>
+    </td>
+    <td><%=h photo.filename %></td>
+    <td><%=h photo.path %></td>
+    <td><%=h photo.startnumber %></td>
+    <td><%=h photo.description %></td>
+    <td><%=h photo.fingerprint %></td>
+    <td><%=h photo.is_processed %></td>
+    <td><%=h photo.is_approved %></td>
+    <td><%=h photo.is_processing %></td>
+    <td><%=h photo.has_startnumber %></td>
+    <td><%=h photo.price %></td>
+    <td><%=h photo.currency %></td>
+    <td><%= link_to 'Show', photo %></td>
+    <td><%= link_to 'Edit', :controller=>'admin/photos', :action=>'edit', :id=>photo.id %></td>
+    <td><%= link_to 'Destroy', photo, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'back to site', events_path %>

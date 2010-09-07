@@ -1,0 +1,17 @@
+development:
+  site_name: foto.bikeonet.hu (alpha)
+  site_url: http://spf.sun.bikeonet.hu
+  paypal_business_address: dave_1268152263_biz@11am.hu
+  paypal_url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+
+test:
+  site_name: foto.bikeonet.hu (alpha)
+  site_url: http://spf.sun.bikeonet.hu
+  paypal_business_address: dave_1268152263_biz@11am.hu
+  paypal_url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+
+production:
+  site_name: foto.bikeonet.hu (beta)
+  site_url: http://foto.bikeonet.hu
+  paypal_business_address: spike@11am.hu
+  paypal_url: https://www.paypal.com/cgi-bin/webscr?

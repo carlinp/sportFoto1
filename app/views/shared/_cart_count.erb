@@ -1,0 +1,7 @@
+<strong>
+<% if session[:cart] != nil  %>
+<%= session[:cart].length %>
+<%  else %>
+    0
+<%  end %>
+</strong> kép a <a href="<%= cart_path %>/checkout">kosaradban</a>.

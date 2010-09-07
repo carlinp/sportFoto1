@@ -1,0 +1,179 @@
+/* 
+    Document   : general
+    Created on : 2010.01.13., 0:01:50
+    Author     : bandras
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+body {
+    text-align: center;
+    background: #FFF;
+    font: 12px/24px arial,helvetica,sans-serif;
+    color: #222;
+}
+
+a { color: #991133; text-decoration: none; }
+a:hover { color: #990000; text-decoration: underline; border: 0; }
+
+.box1 {
+    background-color: #EEE;
+    -moz-border-radius: 7px; -webkit-border-radius: 7px; border: 1px solid #333;
+    padding: 10px;
+}
+
+.box2 {
+    background-color: #333;
+    -moz-border-radius: 7px; -webkit-border-radius: 7px;
+    border: 0px solid #333;
+    color: #AAA;
+}
+
+.grlr {
+    background-image: -moz-linear-gradient(100% 100% 180deg, #333, #777) !important;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#777)) !important;
+}
+
+.grrl {
+    background-image: -moz-linear-gradient(100% 100% 180deg, #777, #333) !important;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#777), to(#333)) !important;
+}
+
+.box2 a {
+    color: #CCC;
+    font-weight: bold;
+}
+
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+
+#site {
+	width: 980px;
+	display: table;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+        text-align: left;
+}
+
+#header {
+    position: relative;
+    width: 980px;
+    height: 200px;
+}
+
+#header-helpbox {
+    width: 330px;
+    height: 200px;
+}
+
+#header p {
+    text-align: right;
+}
+#header h1 {
+    text-align: right;
+}
+#header #header-randoms {
+    width: 320px;
+}
+
+#header #header-randoms .randomphoto img {
+    width: 300px;
+    height: 200px;
+}
+
+#main {
+
+}
+
+#menu {
+    margin: 10px;
+}
+
+#menu li {
+    display: inline-block;
+    margin: 0px 5px 0px 5px;
+}
+#menu li span {
+    margin: 5px;
+}
+#menu ul {
+    margin: 10px 0px 0px 0px;
+    padding: 0px;
+}
+
+#credentials {
+    text-align: right;
+}
+
+#credentials li {
+    height: 16px;
+    display: inline-block;
+    margin: 0px 5px 0px 5px;
+    vertical-align: middle;
+}
+
+#credentials li span {
+    margin: 5px;
+}
+
+#credentials ul {
+    margin: 10px 0px 10px 0px;
+    padding: 0px;
+}
+
+#content {
+
+}
+
+#static-content {
+    margin: 10px 0px 10px 0px;
+}
+
+#cart {
+    width: 324px;
+    height: 200px;
+    margin-left: 5px;
+}
+
+#cart-content-scroll {
+    width: 324px;
+    height: 81px;
+    overflow: hidden;
+}
+
+#cart-slider {
+    margin-top: 3px;
+    margin-left: 10px;
+    width: 305px;
+}
+
+#cart .photo img {
+    width: 100px;
+    border: 1px solid black;
+    margin: 3px;
+}
+
+#footer {
+    border-top: 1px solid black;
+    margin: 10px 0px 10px 0px;
+    text-align: center;
+}
+
+#footer img {
+    margin: 10px;
+    opacity: 0.3;
+}
+
+#footer img:hover {
+    opacity: 1;
+}

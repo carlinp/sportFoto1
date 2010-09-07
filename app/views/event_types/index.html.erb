@@ -1,0 +1,10 @@
+<div id="event_types">
+  <% @event_types.each do |event_type| %>
+    <h3><%=h event_type.name %></h3>
+    <p><%=h event_type.events.count %> esemény,
+       <%=h event_type.photographers.count %> fotós,
+       <%=h event_type.picture_count %> kép,
+       <a href="#">Részletek</a>
+    </p>
+  <% end %>
+</div>

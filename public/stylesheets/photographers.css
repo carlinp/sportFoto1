@@ -1,0 +1,26 @@
+/* 
+    Document   : photographers
+    Created on : 2010.01.26., 10:45:51
+    Author     : bandras
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.photographer img {
+    float: left;
+    border: 1px solid black;
+    margin: 0px 10px 10px 0px;
+}
+
+.photographer {
+    clear: both;
+}
+
+.photographer ul {
+    list-style: none;
+}

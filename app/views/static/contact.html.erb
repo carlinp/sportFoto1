@@ -1,0 +1,33 @@
+<%#
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+
+<h2>Kérdésed van?</h2>
+<p>
+   Tedd fel nekünk!
+</p>
+
+<script type="text/javascript">
+    $(function(){
+
+      $("#send").button({
+        icons: {
+          primary: 'ui-icon-mail-closed'
+        }
+      });
+      
+    });
+</script>
+
+<p>
+  <form>
+    <label for="email">Email cimed</label>
+    <input type="text" name="email" id="email" />
+    <br />
+    <label for="message">Uzenet</label>
+    <textarea name="message" id="message" cols="40" rows="10"></textarea>
+    <br />
+    <button id="send">Kuldes</button>
+  </form>
+</p>

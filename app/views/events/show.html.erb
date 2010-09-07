@@ -1,0 +1,25 @@
+<div class="event-details">
+<h3>
+  <%=h @event.title %>
+</h3>
+<h4>
+  <% if @event.event_type != nil %>
+  <%=h @event.event_type.name %>
+  <% end %>
+</h4>
+<p>
+  <%=h @event.event_start.strftime("%Y. %m. %d.") %>
+</p>
+<p>
+  <%=h @event.description %>
+</p>
+
+<%= link_to 'Képek', event_photos_path(@event) %> (<%=h @photo_count %> db kép)
+<br/>
+<iframe src="http://www.facebook.com/plugins/like.php?href=<%= event_photos_url(@event) %>&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"> </iframe>
+</div>
+
+<div class="event-map">
+  <img src="http://maps.google.com/maps/api/staticmap?center=<%=h @event.location %>&markers=color:blue|label:A|<%=h @event.location %>&zoom=10&size=300x300&sensor=false&key=ABQIAAAAG-e2-oBuPl20pg84inwp8BR_RaLOpqPkRiJpdUAwC9gy1rco0BQvP6fosxHYWvV4rzk7lSPrB2PbIg" />
+</div>
+

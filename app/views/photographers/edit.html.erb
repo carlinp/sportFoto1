@@ -1,0 +1,162 @@
+
+<div id="tabs">
+  <ul>
+    <li><a href="#pictures">Feltöltött képeim</a></li>
+    <li><a href="#balance">Egyenleg</a></li>
+    <li><a href="#personal">Személyes</a></li>
+  </ul>
+
+  <div id="pictures">
+
+    <h3 class="fl" style="width: 50%;">Összesen <%= @photographer.photos.count %> feltöltött kép</h3>
+    <p class="fr" style="width: 50%;">
+
+      <div id="selectors">
+        <input type="radio" name="filter" onClick="filter(1);" id="button-approved" /><label for="button-approved">Várakozik</label>
+        <input type="radio" name="filter" onClick="filter(2);" id="button-price" /><label for="button-price">Árazatlan</label>
+        <input type="radio" name="filter" onClick="filter(3);" id="button-sold" /><label for="button-sold">Eladott</label>
+        <input type="radio" name="filter" onClick="filter(4);" id="button-tagged" /><label for="button-tagged">Rajtszám</label>
+        <input type="radio" name="filter" onClick="filter(0);" id="button-showall" /><label for="button-showall">Mind</label>
+      </div>
+    </p>
+
+    <p class="box1">
+      Ebből elfogadott <%= @photographer.count_approved_pictures %>,
+      azonosított <%= @photographer.count_tagged_pictures %>. <br/>
+      <%= @photographer.photos.count - @photographer.count_approved_pictures %> kép elfogadásra vár.
+    </p>
+
+    <br style="clear: both;"/>
+
+    <style>
+
+      #border1 {
+        width: 352px; height: 232px; position: fixed; left: 50px; top: 30px;
+      }
+      #dialog1 {
+        position: fixed; width: 330px; height: 210px;left: 50px; top: 30px; padding: 10px;
+      }
+
+    </style>
+
+    <!-- ui-dialog -->
+    <div id="dialog" style="display: none">
+      <div id="border1" class="ui-overlay"><div class="ui-widget-overlay"></div><div class="ui-widget-shadow ui-corner-all" style=""></div></div>
+      <div id="dialog1" style="" class="ui-widget ui-widget-content ui-corner-all">
+              <div class="ui-dialog-content ui-widget-content" style="background: none; border: 0;">
+                      <p id="image-dialog-content"></p>
+              </div>
+      </div>
+    </div>
+
+
+    <% @photographer.photos.each do |photo| %>
+      <div class="fl photo" style="display: none; width: 100px; height: 90px; border: 1px solid black; margin: 3px; padding: 1px;"
+           is_approved="<%= photo.is_approved %>" has_startnumber="<%=photo.has_startnumber%>" has_price="<%=photo.has_price%>" sold="<%=photo.is_sold%>">
+      <%= image_tag "photos/#{photo.event_id}/#{photo.fingerprint}.jpg",
+          :id => "photo-#{photo.id}-image",
+          :width=>"100px",
+          :height=>"75px",
+          :is_approved => photo.is_approved,
+          :has_startnumber => photo.has_startnumber,
+          :has_price => photo.has_price,
+          :sold => photo.is_sold
+      %>
+        <% if photo.is_approved %>
+        <span class="ui-icon ui-icon-locked fl" title="Elfogadva">&nbsp;</span>
+        <% else %>
+        <span class="ui-icon ui-icon-unlocked fl" title="Ez a kép még nincs elfogadva, adminisztrátorra vár">&nbsp;</span>
+        <% end %>
+        <% if photo.has_startnumber %>
+        <span class="ui-icon ui-icon-tag fl" title="Rajtszám azonosítva a képen">&nbsp;</span>
+        <% end %>
+        <% if photo.has_price %>
+        <span class="ui-icon ui-icon-calculator fl" title="Árazott">&nbsp;</span>
+        <% end %>
+        <% if photo.is_sold %>
+        <span class="ui-icon ui-icon-cart fl" title="Eladva <%=  photo.sold_num %> darab">&nbsp;</span>
+        <% end %>
+      </div>
+    <% end %>
+    <br style="clear: both" />
+  </div>
+  <div id="balance">
+    <h3>Eladott képeid száma</h3>
+    <p>
+      <%= @sold_num %>
+    </p>
+    <h3>Eladások összege</h3>
+    <p><%= @sold_value %> HUF</p>
+    <h3>Kifizetve</h3>
+    <p><%= @paid_value %> HUF</p>
+    <h3>Kifizethető</h3>
+    <p>
+      <strong><%= @sold_value - @paid_value %> HUF</strong>
+    </p>
+    <button>Kifizetés kérése</button>
+  </div>
+  <div id="personal">
+    <h1><%=h @photographer.user.email %> </h1>
+    <div id="progressbar"></div>
+    <p>A profilod <strong><%= @photographer.get_profile_completion_status %></strong>%-os.</p>
+    <script type="text/javascript">setProgress(<%= @photographer.get_profile_completion_status %>);</script>
+    
+    <% form_for(@photographer, :html => {:multipart => true}) do |f| %>
+      <%= f.error_messages %>
+
+    <h3>Milyen eseményeket fotózol ?</h3>
+    <div class="box1">
+      <% EventType.all.each do |event_type| %>
+        <%= label_tag "photographer_event_type[#{event_type.id}]", event_type.name  %>
+        <%= check_box_tag "photographer_event_type[#{event_type.id}]", event_type.id, @photographer.has_event_type(event_type.id)  %>
+      <% end %>
+    </div>
+
+    <h3>Személyes adataid</h3>
+    <div class="box1">
+      <p>
+        <%= f.label "Keresztneved" %>
+        <%= f.text_field :firstname %>
+      </p>
+
+      <p>
+        <%= f.label "Vezetékneved" %>
+        <%= f.text_field :lastname %>
+      </p>
+
+      <p>
+        <%= f.label "Hol keressünk ?" %>
+        <%= f.text_area :contact , :rows => 5 %>
+      </p>
+    </div>
+
+    <h3>Tölts fel egy avatar képet</h3>
+    <div class="box1">
+      <p>
+        <% if @photographer.avatar != nil %>
+          <%= image_tag '../uploads/'+@photographer.avatar, :width => '100px', :class=>'fr' %>
+        <% end %>
+        <%= f.label :avatar  %>
+        <%= f.file_field :avatar %>
+      </p>
+
+      <p>
+        <%= f.label "Publikus ?" %>
+        <%= f.check_box :is_public %>
+      </p>
+    </div>
+
+    <h3>Kifizetés</h3>
+    <div class="box1">
+      <p>
+        <%= f.label "PayPal címed" %>
+        <%= f.text_field :paypal_address %>
+      </p>
+    </div>
+
+      <p>
+        <%= f.submit 'Update' %>
+      </p>
+    <% end %>
+  </div>
+</div>

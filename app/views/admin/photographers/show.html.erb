@@ -1,0 +1,43 @@
+<p>
+  <b>Firstname:</b>
+  <%=h @photographer.firstname %>
+</p>
+
+<p>
+  <b>Lastname:</b>
+  <%=h @photographer.lastname %>
+</p>
+
+<p>
+  <b>Contact:</b>
+  <%=h @photographer.contact %>
+</p>
+
+<p>
+  <b>Is approved:</b>
+  <%=h @photographer.is_approved %>
+</p>
+
+<p>
+  <b>Is active:</b>
+  <%=h @photographer.is_active %>
+</p>
+
+<p>
+  <b>Is public:</b>
+  <%=h @photographer.is_public %>
+</p>
+
+<p>
+  <b>Avatar:</b>
+  <%=h @photographer.avatar %>
+</p>
+
+<p>
+  <b>Paypal address:</b>
+  <%=h @photographer.paypal_address %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_photographer_path(@photographer) %> |
+<%= link_to 'Back', admin_photographers_path %>

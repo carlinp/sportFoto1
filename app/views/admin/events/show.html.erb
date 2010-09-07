@@ -1,0 +1,53 @@
+<p>
+  <b>Title:</b>
+  <%=h @event.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @event.description %>
+</p>
+
+<p>
+  <b>Banner:</b>
+  <%=h @event.banner %>
+</p>
+
+<p>
+  <b>Gps:</b>
+  <%=h @event.gps %>
+</p>
+
+<p>
+  <b>Fingerprint:</b>
+  <%=h @event.fingerprint %>
+</p>
+
+<p>
+  <b>Event start:</b>
+  <%=h @event.event_start %>
+</p>
+
+<p>
+  <b>Event end:</b>
+  <%=h @event.event_end %>
+</p>
+
+<p>
+  <b>Event type:</b>
+  <%=h @event.event_type_id %>
+</p>
+
+<p>
+  <b>Is approved:</b>
+  <%=h @event.is_approved %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%=h @event.location %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_event_path(@event) %> |
+<%= link_to 'Back', admin_events_path %>

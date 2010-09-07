@@ -1,0 +1,120 @@
+<% content_for :head do %>
+  <%=  javascript_include_tag "uploadify/swfobject", "uploadify/jquery.uploadify.v2.1.0.min" %>
+  <%=  stylesheet_link_tag "/javascripts/uploadify/uploadify" %>
+<% end %>
+
+<script type="text/javascript">
+
+  function openUploadForm( event_id, price ) {
+
+    $('#fileInput').uploadify({
+      'uploader'  : '<%= javascript_path "uploadify/uploadify.swf" %>',
+      'script'    : '<%= root_url + "upload/photo" %>',
+      'cancelImg' : '<%= javascript_path "uploadify/cancel.png" %>',
+      'auto'      : true,
+      'multi'     : true,
+      'folder'    : 'uploads',
+      'scriptData': { 'price': price, 'user_id': '<%= session[:user_id] %>', 'event_id': event_id,'authenticity_token': encodeURIComponent('<%= form_authenticity_token if protect_against_forgery? %>'), '<%= ActionController::Base.session_options[:key]%>': '<%= u request.session_options[:id] %>' },
+      'fileDataName': 'upfile'
+
+    });
+
+    $('#priceselect').fadeTo("slow",0.33);
+    $('#priceselect').css('border', '0px');
+    $('#uploadform').show("slow");
+    $('#uploadform').css("border","3px solid black");
+
+    $('#step2').css("opacity","0.5");
+    $('#step3').css("opacity","1");
+
+  }
+
+  function openPriceForm( event_id, event_title ) {
+
+    $('#eventselect').find('a').remove();
+    $('#eventselect').append("<h3>"+event_title+"</h3>");
+
+    $('#eventselect').fadeTo("slow",0.33);
+    $('#eventselect').css('border', '0px');
+    $('#priceselect').show("slow");
+    $('#priceselect').css("border","3px solid black");
+
+    $('#step1').css("opacity","0.5");
+    $('#step2').css("opacity","1");
+
+    $('#setprice').button({
+        icons: {
+          primary: 'ui-icon-image'
+        }
+      });
+    $('#setprice').click(function() {
+      var price = 0;
+      if ( $('#price_yes')[0].checked ) {
+        price = -1;
+      } else {
+        price = $('#price')[0].value;
+      }
+      openUploadForm(event_id, price);
+    })
+
+  }
+
+</script>
+
+<h1>Feltöltés</h1>
+
+<span id="step1"><strong>1. Eseményválasztás</strong></span> &nbsp; &nbsp;
+<span id="step2" style="opacity: 0.5;"><strong>2. Árazás</strong></span> &nbsp; &nbsp;
+<span id="step3" style="opacity: 0.5;"><strong>3. Feltöltés</strong></span>
+
+<div id="eventselect">
+  <p>
+    Első lépésben válassz eseményt:
+  </p>
+  <% if @events.size == 0 %>
+    <p onmouseover='$("#personal-menu-details").show("pulsate");'>
+      <strong>Nem találsz egyetlen, profilodba illő eseményt sem?</strong> <br/>
+      Állítsd be az Adatok pontban, a Személyes fülön, mely sportokat fotózod!
+    </p>
+    <script type="text/javascript">
+      $('#personal-menu-details').show("pulsate");
+    </script>
+  <% end %>
+  <% @events.each do |event| %>
+    <p>
+      <a href="#" onclick="openPriceForm(<%=h event.id %>, this.innerHTML )"><%=h event.event_start %> - <%=h event.title %></a>
+    </p>
+  <% end %>
+</div>
+
+<div id="priceselect">
+  <p>Második lépésben adj meg egy árat a képeidnek, vagy bízd az árgépünkre!</p>
+  <fieldset>
+    <label for="price_yes">Az árgép adjon árat</label>
+    <input type="radio" name="pricemachine" value="1" id="price_yes" checked="true" />
+    <label for="price_no">Én magam adok meg árat</label>
+    <input type="radio" name="pricemachine" value="0" id="price_no" /><br/>
+    <label for="price">Ár</label>
+    <input type="text" name="price" value="" id="price" /> HUF /db
+  </fieldset>
+  <button id="setprice">Tovább</button>
+</div>
+
+<div id="uploadform">
+  <p>
+    Harmadik lépésben jelöld ki a képeket, amiket fel szeretnél tölteni.
+    Egyszerre 999 db. JPEG típusú képet tölthetsz fel.
+  </p>
+  <input id="fileInput" name="fileInput" type="file" />
+</div>
+
+<!--
+<form action="<%= root_url+"upload/photo" %>" method="post" enctype="multipart/form-data">
+  <input id="f2" name="upfile" type="file" />
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token if protect_against_forgery? %>" />
+  <input type="hidden" name="<%= ActionController::Base.session_options[:key]%>" value="<%= u request.session_options[:id] %>" />
+  <input type="submit" />
+</form>
+-->
+
+

@@ -1,0 +1,27 @@
+/* 
+    Document   : upload
+    Created on : 2010.01.31., 23:20:17
+    Author     : bandras
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#eventselect {
+    border: 3px solid black;
+    padding: 3px;
+}
+
+#uploadform {
+    display: none;
+    padding: 3px;
+}
+
+#priceselect {
+    display: none;
+    padding: 3px;
+}

@@ -1,0 +1,35 @@
+  <% if @photos.count > 0 %>
+    <h2 style="text-align: right; margin-right: 10px;"><a href="<%= cart_path %>/checkout">Kosár</a></h2>
+
+    <div id="cart-content-scroll">
+      <div class="" style="width: <%= @photos.count*108 %>px; height: 75px; ">
+        <% @photos.each do |photo| %>
+          <div class="photo fl">
+              <%= image_tag "photos/#{photo.event_id}/#{photo.fingerprint}.jpg", :width => "100px", :height=>"75px" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div id="cart-slider"></div>
+    <div style="position: relative; bottom: -10px; " class="fr">
+      <a href="<%= cart_path %>/checkout">Fizetés</a>.  
+    </div>
+
+    <script type="text/javascript">
+      $('#cart-slider').slider({
+          animate: true,
+          change: handleSliderChange,
+          slide: handleSliderSlide,
+          min: 0,
+          max: 100,
+          value: 0
+      });
+    </script>
+
+  <% else %>
+    <script type="text/javascript">
+      $("#cart").hide();
+    </script>
+  <% end %>
+
+    

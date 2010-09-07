@@ -1,0 +1,20 @@
+/* 
+    Document   : cart
+    Created on : Mar 8, 2010, 2:29:35 PM
+    Author     : spike
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#cart {
+    display: none;
+}
+
+#download {
+    background-color: yellow;
+}

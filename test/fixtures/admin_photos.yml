@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  filename: MyString
+  path: MyString
+  startnumber: MyString
+  description: MyString
+  fingerprint: MyString
+  is_processed: false
+  is_approved: false
+  is_processing: false
+  has_startnumber: false
+  price: 1
+  currency: MyString
+
+two:
+  filename: MyString
+  path: MyString
+  startnumber: MyString
+  description: MyString
+  fingerprint: MyString
+  is_processed: false
+  is_approved: false
+  is_processing: false
+  has_startnumber: false
+  price: 1
+  currency: MyString
