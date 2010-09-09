@@ -38,7 +38,7 @@ class PhotosController < ApplicationController
         page = 1 if page <= 0
 
         if params[:search] and params[:search].length > 0
-          photo_count = Photo.count_by_sql "SELECT COUNT(id) FROM photos WHERE is_approved=1 and event_id=#{params[:event_id]} AND startnumber=UPPER(TRIM(QUOTE('#{params[:search]}')))"
+          photo_count = Photo.count_by_sql "SELECT COUNT(id) FROM photos WHERE is_approved=1 and event_id=#{params[:event_id]} AND startnumber LIKE UPPER(TRIM('%#{params[:search]}%'))"
         else
           photo_count = Photo.count_by_sql "SELECT COUNT(id) FROM photos WHERE is_approved=1 and event_id=#{params[:event_id]}"
         end
@@ -56,7 +56,7 @@ class PhotosController < ApplicationController
         end
 
         if params[:search] and params[:search].length > 0 
-          @photos = Photo.find_all_by_event_id_and_startnumber_and_is_approved params[:event_id], params[:search], true, :offset => (page-1)*10, :limit => 12, :conditions=>["id not in (?)", exclude]
+          @photos = Photo.find_all_by_event_id_and_is_approved params[:event_id], true, :offset => (page-1)*10, :limit => 12, :conditions=>["id not in (?) AND startnumber LIKE UPPER(TRIM(?))", exclude, "%#{params[:search]}%" ]
         else
           @photos = Photo.find_all_by_event_id_and_is_approved params[:event_id], true, :offset => (page-1)*12, :limit => 12, :conditions=>["id not in (?)", exclude]
         end

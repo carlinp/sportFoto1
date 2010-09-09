@@ -169,9 +169,14 @@ a:hover { color: #990000; text-decoration: underline; border: 0; }
     text-align: center;
 }
 
+#footer a {
+    border: none;
+}
+
 #footer img {
     margin: 10px;
     opacity: 0.3;
+    border: none;
 }
 
 #footer img:hover {

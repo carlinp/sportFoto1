@@ -17,7 +17,7 @@ class EventsController < ApplicationController
   # GET /events/1.xml
   def show
     @event = Event.find(params[:id])
-    @photo_count = Photo.count_by_sql "SELECT COUNT(id) FROM photos WHERE event_id=#{@event.id}"
+    @photo_count = @event.approved_photos_count
     respond_to do |format|
       format.html  
       format.xml  { render :xml => @event }
