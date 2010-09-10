@@ -3,15 +3,18 @@ development:
   site_url: http://spf.sun.bikeonet.hu
   paypal_business_address: dave_1268152263_biz@11am.hu
   paypal_url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+  maps_api_key: ABQIAAAAG-e2-oBuPl20pg84inwp8BR_RaLOpqPkRiJpdUAwC9gy1rco0BQvP6fosxHYWvV4rzk7lSPrB2PbIg
 
 test:
   site_name: foto.bikeonet.hu (alpha)
   site_url: http://spf.sun.bikeonet.hu
   paypal_business_address: dave_1268152263_biz@11am.hu
   paypal_url: https://www.sandbox.paypal.com/cgi-bin/webscr?
+  maps_api_key: ABQIAAAAG-e2-oBuPl20pg84inwp8BR_RaLOpqPkRiJpdUAwC9gy1rco0BQvP6fosxHYWvV4rzk7lSPrB2PbIg
 
 production:
   site_name: foto.bikeonet.hu (beta)
   site_url: http://foto.bikeonet.hu
   paypal_business_address: spike@11am.hu
   paypal_url: https://www.paypal.com/cgi-bin/webscr?
+  maps_api_key: ABQIAAAAG-e2-oBuPl20pg84inwp8BR_RaLOpqPkRiJpdUAwC9gy1rco0BQvP6fosxHYWvV4rzk7lSPrB2PbIg

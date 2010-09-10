@@ -14,7 +14,60 @@
     });
   </script>
 
+<% if @photo.spot != nil %>
+    <script src="http://maps.google.com/maps?file=api&v=2&sensor=false&key=<%=  $app_config['maps_api_key'] %>"
+            type="text/javascript"></script>
+    <script type="text/javascript">
+
+    function initialize() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("photo-map"));
+        map.setCenter(new GLatLng(<%= @photo.spot.gps_lat %>, <%= @photo.spot.gps_long %>), 17);
+        map.setUIToDefault();
+        map.setMapType(G_HYBRID_MAP);
+
+        var baseIcon = new GIcon(G_DEFAULT_ICON);
+        baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png";
+        baseIcon.iconSize = new GSize(20, 34);
+        baseIcon.shadowSize = new GSize(37, 34);
+        baseIcon.iconAnchor = new GPoint(9, 34);
+        baseIcon.infoWindowAnchor = new GPoint(9, 2);
+
+        // Creates a marker whose info window displays the letter corresponding
+        // to the given index.
+        function createMarker(point) {
+
+          // Set up our GMarkerOptions object
+          markerOptions = { icon: baseIcon };
+          var marker = new GMarker(point, markerOptions);
+
+          GEvent.addListener(marker, "click", function() {
+            marker.openInfoWindowHtml('<%= image_tag "photos/#{@photo.event_id}/#{@photo.fingerprint}.jpg", :id => "photo-#{@photo.id}-image" %>');
+          });
+          return marker;
+        }
+
+        var latlng = new GLatLng( <%= @photo.spot.gps_lat %> , <%= @photo.spot.gps_long %> );
+        map.addOverlay(createMarker(latlng));
+
+      }
+    }
+
+    </script>
 <% end %>
+
+
+<% end %>
+
+    <% if @photo.spot != nil %>
+    <div id="photo-map" style="width: 100%; height: 300px;border: 1px solid black; margin-bottom: 15px;">
+      <script type="text/javascript" >
+        initialize();
+      </script>
+    </div>
+    <% end %>
+
+
     <div class="fl">
       <% if @photo.exif != nil %>
         <div style="text-align: left;">
@@ -46,9 +99,11 @@
       <%= link_to 'Tovább a többi képhez', event_photos_path(@photo.event) %>
 
     </div>
+
     <div class="fr">
       <%= image_tag "photos/#{@photo.event_id}/#{@photo.fingerprint}.jpg", :id => "photo-#{@photo.id}-image" %>
     </div>
     <div style="clear: both;">
       <iframe src="http://www.facebook.com/plugins/like.php?href=<%= photos_url %>/show/<%=@photo.id%>&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"> </iframe>
     </div>
+

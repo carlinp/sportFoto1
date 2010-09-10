@@ -3,6 +3,7 @@ class Photo < ActiveRecord::Base
   belongs_to :event
   belongs_to :category
   belongs_to :exif
+  belongs_to :spot
   has_many :cart_items
 
   def has_price

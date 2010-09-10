@@ -72,7 +72,7 @@
         <%=h photo.exif.width %>x<%=h photo.exif.height %></p>
         <button class="detail" onclick="javascript: jqshowDetails(<%=h photo.id %>);">Részletek</button>
       <% else %>
-        </p>
+          </p>
       <% end %>
     </div>
     <div class="fr">
@@ -102,6 +102,9 @@
           <p>F <%=h photo.exif.f_number %></p>
           <% if photo.price==0 %>
           <p>Ezt a képet máris <strong><a href="/photos/download/<%=photo.id%>">letöltheted</a></strong></p>
+          <% end %>
+          <% if photo.spot != nil %>
+          <p>Helyszín: <%=photo.spot.name%> - <strong><%= link_to "térkép", "#{photos_url}/show/#{photo.id}" %></strong></p>
           <% end %>
         </div>
       <% end %>

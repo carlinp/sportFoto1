@@ -9,50 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100815082824) do
-
-  create_table "admin_events", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
-    t.string   "banner"
-    t.string   "gps"
-    t.string   "fingerprint"
-    t.datetime "event_start"
-    t.datetime "event_end"
-    t.integer  "event_type_id"
-    t.boolean  "is_approved"
-    t.string   "location"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "admin_photographers", :force => true do |t|
-    t.string   "firstname"
-    t.string   "lastname"
-    t.text     "contact"
-    t.boolean  "is_approved"
-    t.boolean  "is_public"
-    t.string   "avatar"
-    t.string   "paypal_address"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "admin_photos", :force => true do |t|
-    t.string   "filename"
-    t.string   "path"
-    t.string   "startnumber"
-    t.string   "description"
-    t.string   "fingerprint"
-    t.boolean  "is_processed"
-    t.boolean  "is_approved"
-    t.boolean  "is_processing"
-    t.boolean  "has_startnumber"
-    t.integer  "price"
-    t.string   "currency"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20100910094842) do
 
   create_table "cart_items", :force => true do |t|
     t.integer "cart_id"
@@ -155,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20100815082824) do
     t.integer  "exif_id"
     t.integer  "price",           :default => 0
     t.string   "currency"
+    t.integer  "spot_id"
   end
 
   create_table "photos_startnumbers", :force => true do |t|
@@ -163,6 +121,13 @@ ActiveRecord::Schema.define(:version => 20100815082824) do
     t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "spots", :force => true do |t|
+    t.string  "name"
+    t.string  "gps_lat"
+    t.string  "gps_long"
+    t.integer "event_id"
   end
 
   create_table "users", :force => true do |t|
