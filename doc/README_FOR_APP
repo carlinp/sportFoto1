@@ -40,7 +40,7 @@ version 1 planned 2010.02.28
  [x] administrator approve submitted events
  [x] administrator approve photographer registrations
  [ ] multiple administrators categorize, approve and delete photos per event
- [x] multiple administrators apply startnumber to photos
+ [x] (multiple) administrators apply startnumber to photos
  [x] search for startnumbers per event
  [ ] browse photos per category per event
 

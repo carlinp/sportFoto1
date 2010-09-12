@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
   belongs_to :event_type
   has_many :photos
+  has_many :spots
 
   validates_presence_of :title, :location, :event_start
 

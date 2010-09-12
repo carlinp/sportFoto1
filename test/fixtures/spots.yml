@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  gps_lat: MyString
+  gps_long: MyString
+  event_id: 1
+
+two:
+  name: MyString
+  gps_lat: MyString
+  gps_long: MyString
+  event_id: 1

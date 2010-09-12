@@ -8,25 +8,61 @@
     <%=h @event.title %>, <%=h @event.location %> <%=h @event.event_start.year %> képek
   </title>
 
-  <script type="text/javascript">
-    $(function(){
-      $(".basket").button({
-        icons: {
-          primary: 'ui-icon-cart'
+    <script src="http://maps.google.com/maps?file=api&v=2&sensor=false&key=<%=  $app_config['maps_api_key'] %>"
+            type="text/javascript"></script>
+    <script type="text/javascript">
+
+    function initialize() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map"));
+        map.setCenter(new GLatLng(<%= @event.spots[0].gps_lat %> , <%= @event.spots[0].gps_long %>), 13);
+        map.setUIToDefault();
+        map.setMapType(G_HYBRID_MAP);
+        var baseIcon = new GIcon(G_DEFAULT_ICON);
+        baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png";
+        baseIcon.iconSize = new GSize(20, 34);
+        baseIcon.shadowSize = new GSize(37, 34);
+        baseIcon.iconAnchor = new GPoint(9, 34);
+        baseIcon.infoWindowAnchor = new GPoint(9, 2);
+
+        // Creates a marker whose info window displays the letter corresponding
+        // to the given index.
+        function createMarker(point, title) {
+
+          // Set up our GMarkerOptions object
+          markerOptions = { icon: baseIcon };
+          var marker = new GMarker(point, markerOptions);
+
+          GEvent.addListener(marker, "click", function() {
+            marker.openInfoWindowHtml( title );
+            //set timeline
+            //set title
+            $('#spot-title').html(title);
+            $('#form_spot_title').attr("value",title);
+          });
+          return marker;
         }
-      });
-      $(".detail").button({
-        icons: {
-          primary: 'ui-icon-document'
+
+
+        var spots = [
+          <% @event.spots.each do |spot| %>
+           {'gps_lat': <%= spot.gps_lat %>,
+            'gps_long': <%= spot.gps_long %>,
+            'title': '<%= spot.name %>'}
+            <%="," unless spot == @event.spots.last %>
+          <% end %>
+          ];
+
+        for (i in spots) {
+          var spot = spots[i];
+          var latlng = new GLatLng( spot.gps_lat , spot.gps_long);
+          map.addOverlay(createMarker(latlng, spot.title ));
         }
-      });
-      $("#searchbutton").button({
-        icons: {
-          primary: 'ui-icon-search'
-        }
-      });
-    });
-  </script>
+
+      }
+    }
+    </script>
+
 
 <% end %>
 
@@ -38,11 +74,52 @@
   </div>
 </div>
 
-<div id="search">
-  <% form_tag(event_photos_path(@event), :method => "get" ) do %>
-    <input type="text" id="searchbar" name="search" value="Rajtszámod" onclick="if (this.value=='Rajtszámod') { this.value=''; return false }"/>
-    <button id="searchbutton">Keres</button>
-  <% end %>
+<div id="search-tabs">
+  <ul>
+    <li><a href="#search">Rajtszám szerinti keresés</a></li>
+    <li><a href="#timeline">Időpont és helyszín szerinti keresés</a></li>
+  </ul>
+  <div id="search">
+    <% form_tag(event_photos_path(@event), :method => "get" ) do %>
+      <input type="text" id="searchbar" name="search" value="Rajtszámod" onclick="if (this.value=='Rajtszámod') { this.value=''; return false }"/>
+      <button id="searchbutton">Keres</button>
+    <% end %>
+  </div>
+  <div id="timeline">
+    <% form_tag(event_photos_path(@event), :method=>"get") do %>
+    <input type="hidden" name="spot_title" id="form_spot_title" value="<%=params[:spot_title]%>" />
+    <input type="hidden" name="from_time" id="form_time_from" value="<%= params[:from_time]%>"/>
+    <input type="hidden" name="to_time" id="form_time_to" value="<%= params[:to_time]%> " />
+    <p>
+      Válassz helyszínt:<br/>
+    </p>
+    <p>
+    <div id="map" style="width: 100%; height: 300px;border: 1px solid black; margin-bottom: 15px;">
+      <script type="text/javascript" >
+      initialize();
+      </script>
+    </div>
+    </p>
+    <p>
+      Szűkíts időpontot:<br/>
+      <div id="time-slider"></div>
+      <span class="fl"><%=@min_time.hour%>:<%=@min_time.min%></span>
+      <span class="fr"><%=@max_time.hour%>:<%=@max_time.min%></span>
+      <br style="clear: both;"/>
+    </p>
+    <p style="margin-top: 5px;">
+      <strong>
+        Keresem a <span id="spot-title"><%=params[:spot_title]%></span> helyen <span id="time-from"></span> és <span id="time-to"></span> között készült képeket.
+      </strong>
+      <button id="go">Mehet</button>
+    </p>
+    <% end %>
+      <script type="text/javascript">
+        initTimeSlider('<%=@min_time%>','<%=@max_time%>',<%= @from_time %> ,<%= @to_time %>);
+      </script>
+
+  </div>
+
 </div>
 
 <div id="photos">
@@ -123,7 +200,11 @@
 <div id="pager">
   <span><%
     if @current_page > 1
-    %><%=link_to "Előző oldal", event_photos_path(@event, :params=>{:page=>@current_page-1}) %><%
+    %>
+        <%
+        urlparams = params;
+        urlparams["page"]=@current_page-1;
+        %><%=link_to "Előző oldal", event_photos_path(@event, :params=>urlparams) %><%
     else
     %>&nbsp;<%
     end
@@ -131,7 +212,11 @@
   <span style="text-align: center;"><%=h @current_page %> / <%=h @max_page %></span>
   <span style="text-align: right;"><%
     if @current_page < @max_page
-    %><%=link_to "Következő oldal", event_photos_path(@event, :params=>{:page=>@current_page+1}) %><%
+    %>
+      <%
+      urlparams = params;
+      urlparams["page"]=@current_page+1;
+      %><%=link_to "Következő oldal", event_photos_path(@event, :params=>urlparams) %><%
     end
   %></span>
 </div>

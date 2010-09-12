@@ -37,7 +37,11 @@ class PhotosController < ApplicationController
         end
         page = 1 if page <= 0
 
-        if params[:search] and params[:search].length > 0
+        if params[:spot_title] and params[:spot_title].length >0 and params[:from_time] and params[:to_time]
+          photo_count = Photo.count :joins=>"LEFT OUTER JOIN exifs on photos.exif_id=exifs.id LEFT OUTER JOIN spots ON photos.spot_id=spots.id",
+                                    :conditions => ["is_approved=1 and photos.event_id=? AND spots.name=? AND exifs.date_time BETWEEN FROM_UNIXTIME(?)-INTERVAL 2 HOUR AND FROM_UNIXTIME(?)-INTERVAL 2 HOUR" ,params[:event_id], params[:spot_title], params[:from_time][0,10].to_i, params[:to_time][0,10].to_i ]
+                                    
+        elsif params[:search] and params[:search].length > 0
           photo_count = Photo.count_by_sql "SELECT COUNT(id) FROM photos WHERE is_approved=1 and event_id=#{params[:event_id]} AND startnumber LIKE UPPER(TRIM('%#{params[:search]}%'))"
         else
           photo_count = Photo.count_by_sql "SELECT COUNT(id) FROM photos WHERE is_approved=1 and event_id=#{params[:event_id]}"
@@ -55,13 +59,43 @@ class PhotosController < ApplicationController
             exclude = 0;
         end
 
-        if params[:search] and params[:search].length > 0 
-          @photos = Photo.find_all_by_event_id_and_is_approved params[:event_id], true, :offset => (page-1)*10, :limit => 12, :conditions=>["id not in (?) AND startnumber LIKE UPPER(TRIM(?))", exclude, "%#{params[:search]}%" ]
+        if params[:spot_title] and params[:spot_title].length >0 and params[:from_time] and params[:to_time]
+          @photos = Photo.find_all_by_event_id_and_is_approved params[:event_id], true,
+                                    :joins=>"LEFT OUTER JOIN exifs on photos.exif_id=exifs.id LEFT OUTER JOIN spots ON photos.spot_id=spots.id",
+                                    :conditions => ["spots.name=? AND exifs.date_time BETWEEN FROM_UNIXTIME(?)-INTERVAL 2 HOUR AND FROM_UNIXTIME(?)-INTERVAL 2 HOUR" , params[:spot_title], params[:from_time][0,10].to_i, params[:to_time][0,10].to_i ],
+                                    :order => "exifs.date_time ASC",
+                                    :offset => (page-1)*10, :limit => 12
+        elsif params[:search] and params[:search].length > 0
+          @photos = Photo.find_all_by_event_id_and_is_approved params[:event_id], true, :offset => (page-1)*10, :limit => 12, 
+                    :conditions=>["photos.id not in (?) AND startnumber LIKE UPPER(TRIM(?))", exclude, "%#{params[:search]}%" ],
+                    :joins => "LEFT OUTER JOIN exifs ON photos.exif_id=exifs.id",
+                    :order => "exifs.date_time ASC"
         else
-          @photos = Photo.find_all_by_event_id_and_is_approved params[:event_id], true, :offset => (page-1)*12, :limit => 12, :conditions=>["id not in (?)", exclude]
+          @photos = Photo.find_all_by_event_id_and_is_approved params[:event_id], true, :offset => (page-1)*12, :limit => 12, 
+                    :conditions=>["photos.id not in (?)", exclude],
+                    :joins => "LEFT OUTER JOIN exifs ON photos.exif_id=exifs.id",
+                    :order => "exifs.date_time ASC"
         end
 
         @event = Event.find params[:event_id]
+        @min_time = DateTime.parse Photo.minimum "date_time",
+                    :conditions => ["is_approved=1 AND event_id=?", @event.id],
+                    :joins => "LEFT OUTER JOIN exifs ON photos.exif_id=exifs.id"
+        
+        @max_time = DateTime.parse Photo.maximum "date_time",
+                    :conditions => ["is_approved=1 AND event_id=?", @event.id],
+                    :joins => "LEFT OUTER JOIN exifs ON photos.exif_id=exifs.id"
+
+        if params[:from_time] and params[:from_time].length >0
+          @from_time = params[:from_time].to_i
+        else
+          @from_time = 0
+        end
+        if params[:to_time] and params[:to_time].length >0
+          @to_time = params[:to_time].to_i
+        else
+          @to_time = 0
+        end
         #index.html.erb
         
         render "index_events.html.erb"
