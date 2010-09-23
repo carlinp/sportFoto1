@@ -42,7 +42,7 @@ class PhotosController < ApplicationController
                                     :conditions => ["is_approved=1 and photos.event_id=? AND spots.name=? AND exifs.date_time BETWEEN FROM_UNIXTIME(?)-INTERVAL 2 HOUR AND FROM_UNIXTIME(?)-INTERVAL 2 HOUR" ,params[:event_id], params[:spot_title], params[:from_time][0,10].to_i, params[:to_time][0,10].to_i ]
                                     
         elsif params[:search] and params[:search].length > 0
-          photo_count = Photo.count_by_sql "SELECT COUNT(id) FROM photos WHERE is_approved=1 and event_id=#{params[:event_id]} AND startnumber LIKE UPPER(TRIM('%#{params[:search]}%'))"
+          photo_count = Photo.count_by_sql "SELECT COUNT(id) FROM photos WHERE is_approved=1 and event_id=#{params[:event_id]} AND startnumber RLIKE UPPER(TRIM('[[:<:]]#{params[:search]}[[:>:]]'))"
         else
           photo_count = Photo.count_by_sql "SELECT COUNT(id) FROM photos WHERE is_approved=1 and event_id=#{params[:event_id]}"
         end
@@ -67,7 +67,7 @@ class PhotosController < ApplicationController
                                     :offset => (page-1)*10, :limit => 12
         elsif params[:search] and params[:search].length > 0
           @photos = Photo.find_all_by_event_id_and_is_approved params[:event_id], true, :offset => (page-1)*10, :limit => 12, 
-                    :conditions=>["photos.id not in (?) AND startnumber LIKE UPPER(TRIM(?))", exclude, "%#{params[:search]}%" ],
+                    :conditions=>["photos.id not in (?) AND startnumber RLIKE UPPER(TRIM(?))", exclude, "[[:<:]]#{params[:search]}[[:>:]]" ],
                     :joins => "LEFT OUTER JOIN exifs ON photos.exif_id=exifs.id",
                     :order => "exifs.date_time ASC"
         else
