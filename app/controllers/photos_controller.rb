@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
 
-  before_filter :require_admin, :except => [ :index, :random, :show ]
+  before_filter :require_admin, :except => [ :index, :random, :show, :download ]
   layout "general", :except => [:random]
 
   def index
@@ -137,6 +137,9 @@ class PhotosController < ApplicationController
     end
     
     if (from_cart or @photo.price == 0)
+      @photo.num_download = @photo.num_download+1
+      @photo.save
+
       send_file File.join(RAILS_ROOT,'data',@photo.event_id.to_s,@photo.photographer.user_id.to_s,@photo.fingerprint), :type=>"image/jpeg"
     end
   end
