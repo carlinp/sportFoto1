@@ -170,7 +170,7 @@
         <div style="text-align: left; width: 250px;">
           <p>
             <strong>
-              Ez a méret csak egy minta. A fotót megvásárolhatod poszter méretben (<%=h photo.exif.width %>x<%=h photo.exif.height %> pixel).
+              Ez a méret csak egy minta. A fotót <%if photo.price==0 %><a href="/photos/download/<%=photo.id%>">letöltheted</a><%else%>megvásárolhatod<%end%> poszter méretben (<%=h photo.exif.width %>x<%=h photo.exif.height %> pixel).
             </strong><br/>
             További információk a képről:
           </p>

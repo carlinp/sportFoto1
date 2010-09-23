@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <% if @cart.total_price == 0 %>
+  <% if @cart.total_price == 0 and @photos.count > 0 %>
     <div> <!-- download accordion div -->
       <h3><a href="#">Letöltés</a></h3>
       <div>
@@ -56,7 +56,7 @@
         </p>
       </div>
     </div>
-  <% else %>
+  <% elsif @photos.count > 0 %>
     <div> <!-- fizetes accordion div -->
       <h3><a href="#">Fizetés</a></h3>
       <div>
@@ -67,6 +67,15 @@
           <script type="text/javascript">
             $("#cart-pay-link").load('<%=  cart_path %>/paylink');
           </script>
+        </p>
+      </div>
+    </div>
+  <% else %>
+    <div> <!-- fizetes accordion div -->
+      <h3><a href="#">Fizetés</a></h3>
+      <div>
+        <p>
+          A kosarad még üres.
         </p>
       </div>
     </div>

@@ -85,8 +85,8 @@ function initTimeSlider(time_min, time_max, act_min, act_max) {
       var dateMax = datePattern.exec(time_max);
       var timeMax = timePattern.exec(time_max);
 
-      var min = new Date(Date.UTC(dateMin[1], dateMin[2], dateMin[3], timeMin[1], timeMin[2], 0, 0));
-      var max = new Date(Date.UTC(dateMax[1], dateMax[2], dateMax[3], timeMax[1], timeMax[2], 0, 0));
+      var min = new Date(Date.UTC(dateMin[1], dateMin[2]-1, dateMin[3], timeMin[1], timeMin[2], 0, 0));
+      var max = new Date(Date.UTC(dateMax[1], dateMax[2]-1, dateMax[3], timeMax[1], timeMax[2], 0, 0));
       //var min = Date.parse(dateMin+"T"+timeMin+"Z");
       //var max = Date.parse(dateMax+"T"+timeMax+"Z");
       if (act_min==0) {
