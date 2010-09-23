@@ -151,6 +151,7 @@ tmp/war/WEB-INF/app/models/photo.rb=
 tmp/war/WEB-INF/app/models/photographer.rb=
 tmp/war/WEB-INF/app/models/photographers_event_type.rb=
 tmp/war/WEB-INF/app/models/photos_startnumber.rb=
+tmp/war/WEB-INF/app/models/spot.rb=
 tmp/war/WEB-INF/app/models/user.rb=
 tmp/war/WEB-INF/app/views=
 tmp/war/WEB-INF/app/views/admin=

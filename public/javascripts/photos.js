@@ -77,29 +77,39 @@ function handleTimeSliderSlide(e, ui) {
 
 
 function initTimeSlider(time_min, time_max, act_min, act_max) {
-      var min = Date.parse(time_min);
-      var max = Date.parse(time_max);
+      var datePattern = new RegExp("([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})");
+      var timePattern = new RegExp("([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})")
+
+      var dateMin = datePattern.exec(time_min);
+      var timeMin = timePattern.exec(time_min);
+      var dateMax = datePattern.exec(time_max);
+      var timeMax = timePattern.exec(time_max);
+
+      var min = new Date(Date.UTC(dateMin[1], dateMin[2], dateMin[3], timeMin[1], timeMin[2], 0, 0));
+      var max = new Date(Date.UTC(dateMax[1], dateMax[2], dateMax[3], timeMax[1], timeMax[2], 0, 0));
+      //var min = Date.parse(dateMin+"T"+timeMin+"Z");
+      //var max = Date.parse(dateMax+"T"+timeMax+"Z");
       if (act_min==0) {
-          act_min = min;
+          act_min = min.valueOf();
       }
-      else {
-        var left=new Date(act_min);
-        $("#time-from").html(left.getUTCHours()+":"+left.getUTCMinutes());
-      }
+      var left=new Date(act_min);
+      $("#form_time_from").attr("value", act_min);
+      $("#time-from").html(left.getUTCHours()+":"+left.getUTCMinutes());
+
       if (act_max==0) {
-          act_max = max;
+          act_max = max.valueOf();
       }
-      else {
-        var right=new Date(act_max);
-        $("#time-to").html(right.getUTCHours()+":"+right.getUTCMinutes());
-      }
+      var right=new Date(act_max);
+      $("#form_time_to").attr("value", act_max);
+      $("#time-to").html(right.getUTCHours()+":"+right.getUTCMinutes());
+
       $("#time-slider").slider({
           range: true,
           animate: true,
           change: handleTimeSliderChange,
 //          slide: handleTimeSliderChange,
-          min: min,
-          max: max,
+          min: min.valueOf(),
+          max: max.valueOf(),
           values: [act_min,act_max]
       });
 

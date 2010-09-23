@@ -60,7 +60,7 @@ class Admin::EventsController < Admin::AdminController
     @event = Admin::Event.find(params[:id])
 
     respond_to do |format|
-      if @event.update_attributes(params[:event])
+      if @event.update_attributes(params[:admin_event])
         flash[:notice] = 'Admin::Event was successfully updated.'
         format.html { redirect_to(@event) }
         format.xml  { head :ok }

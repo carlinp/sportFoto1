@@ -40,7 +40,7 @@ class Admin::PhotographersController < Admin::AdminController
   # POST /admin_photographers
   # POST /admin_photographers.xml
   def create
-    @photographer = Admin::Photographer.new(params[:photographer])
+    @photographer = Admin::Photographer.new(params[:admin_photographer])
 
     respond_to do |format|
       if @photographer.save
@@ -60,7 +60,7 @@ class Admin::PhotographersController < Admin::AdminController
     @photographer = Admin::Photographer.find(params[:id])
 
     respond_to do |format|
-      if @photographer.update_attributes(params[:photographer])
+      if @photographer.update_attributes(params[:admin_photographer])
         flash[:notice] = 'Admin::Photographer was successfully updated.'
         format.html { redirect_to(@photographer) }
         format.xml  { head :ok }

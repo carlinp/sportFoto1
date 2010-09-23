@@ -78,13 +78,21 @@ class PhotosController < ApplicationController
         end
 
         @event = Event.find params[:event_id]
-        @min_time = DateTime.parse Photo.minimum "date_time",
+
+        min_photo_time = Photo.minimum "date_time",
                     :conditions => ["is_approved=1 AND event_id=?", @event.id],
                     :joins => "LEFT OUTER JOIN exifs ON photos.exif_id=exifs.id"
-        
-        @max_time = DateTime.parse Photo.maximum "date_time",
-                    :conditions => ["is_approved=1 AND event_id=?", @event.id],
-                    :joins => "LEFT OUTER JOIN exifs ON photos.exif_id=exifs.id"
+
+        if ( min_photo_time != nil)
+          @min_time = DateTime.parse min_photo_time
+
+          @max_time = DateTime.parse Photo.maximum "date_time",
+                      :conditions => ["is_approved=1 AND event_id=?", @event.id],
+                      :joins => "LEFT OUTER JOIN exifs ON photos.exif_id=exifs.id"
+        else
+          @min_time = @event.event_start
+          @max_time = @event.event_end
+        end
 
         if params[:from_time] and params[:from_time].length >0
           @from_time = params[:from_time].to_i
