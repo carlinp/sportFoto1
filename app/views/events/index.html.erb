@@ -61,11 +61,17 @@
 <% @events.each do |event| %>
 
   <div class="event">
-    <p class="event-title"><%= link_to event.title, event_photos_path(event) %></p>
+    <p class="event-title">
+      <% if event.slug != nil %>
+        <%= link_to event.title, "/#{event.slug}" %>
+      <% else %>
+        <%= link_to event.title, event_photos_path(event) %>
+      <% end %>
+    </p>
     <p class="event-start"><%=h event.event_start.strftime("%Y. %m. %d.") %>, <%= event.location %></p>
-    <p><%= event.event_type.name %>, 
-      <strong><%= event.approved_photos_count %> kép</strong>
-      <a href="#event-<%=h event.id %>" onclick="openContent(<%=h event.id %>,'<%=event_path(event)%>')"> Részletek </a>
+    <p><%=dt event.event_type.name %>,
+      <strong><%= event.approved_photos_count %> <%=dt "kép" %></strong>
+      <a href="#event-<%=h event.id %>" onclick="openContent(<%=h event.id %>,'<%=event_path(event)%>')"> <%=dt "Részletek" %></a>
     </p>
     <div id="event-content-<%=h event.id %>" style="display: none">
     </div>

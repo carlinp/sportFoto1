@@ -34,4 +34,8 @@ module ApplicationHelper
     return false
   end
 
+  def dt(key, options = {})
+    I18n.translate_default(key, options)
+  end
+
 end

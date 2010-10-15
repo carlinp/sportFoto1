@@ -3,6 +3,8 @@
 # and open the template in the editor.
 %>
 <% content_for :head do %>
+  <meta name="description" content="<%=h @event.title %>, <%=h @event.location %> <%=h @event.event_start.year %> <%=dt "képek" %>"/>
+  <meta name="keywords" content="<%=h @event.title %> <%=h @event.location %> <%=dt @event.event_type.name %> <%=dt "képek" %> "/>
   <%= stylesheet_link_tag "events"  %>
   <title>
     <%=h @event.title %>, <%=h @event.location %> <%=h @event.event_start.year %> képek

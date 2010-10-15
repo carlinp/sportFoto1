@@ -47,15 +47,15 @@ end
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
-  # config.i18n.default_locale = :de
+   config.i18n.default_locale = :hu
 
   # Ensure the gateway is in test mode
-  require "money"
-  require "active_merchant"
+#  require "money"
+#  require "active_merchant"
 
- ActiveMerchant::Billing::Base.gateway_mode = :test
- ActiveMerchant::Billing::Base.integration_mode = :test
- ActiveMerchant::Billing::PaypalGateway.pem_file =
-                 File.read(File.dirname(__FILE__) + '/../paypal/paypal_cert.pem')
+# ActiveMerchant::Billing::Base.gateway_mode = :test
+# ActiveMerchant::Billing::Base.integration_mode = :test
+# ActiveMerchant::Billing::PaypalGateway.pem_file =
+#                 File.read(File.dirname(__FILE__) + '/../paypal/paypal_cert.pem')
 
 end

@@ -41,11 +41,11 @@
       <div id="main">
         <div id="menu" class="">
           <ul>
-            <li><span class="ui-icon ui-icon-image fl">&nbsp;</span><%= link_to 'Képek', events_path %></li>
-            <li><span class="ui-icon ui-icon-calculator fl">&nbsp;</span><a href="">Árak</a></li>
-            <li><span  class="ui-icon ui-icon-tag fl">&nbsp;</span><%= link_to 'Sportok', event_types_path %></li>
-            <li><span  class="ui-icon ui-icon-person fl">&nbsp;</span><%= link_to 'Fotósoknak', photographers_path %></li>
-            <li><span  class="ui-icon ui-icon-mail-closed fl">&nbsp;</span><%= link_to 'Kapcsolat', contact_path %></li>
+            <li><span class="ui-icon ui-icon-image fl">&nbsp;</span><%= link_to dt('Képek'), events_path %></li>
+            <li><span class="ui-icon ui-icon-calculator fl">&nbsp;</span><a href=""><%=dt "Árak"%></a></li>
+            <li><span  class="ui-icon ui-icon-tag fl">&nbsp;</span><%= link_to dt('Sportok'), event_types_path %></li>
+            <li><span  class="ui-icon ui-icon-person fl">&nbsp;</span><%= link_to dt('Fotósoknak'), photographers_path %></li>
+            <li><span  class="ui-icon ui-icon-mail-closed fl">&nbsp;</span><%= link_to dt('Kapcsolat'), contact_path %></li>
           </ul>
         </div>
         <div id="credentials">

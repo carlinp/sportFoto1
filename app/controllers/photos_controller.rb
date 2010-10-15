@@ -26,6 +26,14 @@ class PhotosController < ApplicationController
     end
   end
 
+  def index_events_slug
+    if params[:slug]
+      event = Event.find_by_slug params[:slug]
+      params[:event_id] = event.id
+      index_events
+    end
+  end
+
   def index_events
 
     respond_to do |format|
@@ -110,7 +118,7 @@ class PhotosController < ApplicationController
 
       }
       format.xml {
-        @photos = Photo.find_all_by_event_id params[:event_id]
+        @photos = Photo.find_all_by_event_id_and_is_approved params[:event_id], true
         render :xml => @photos
       }
     end

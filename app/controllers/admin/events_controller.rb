@@ -35,6 +35,9 @@ class Admin::EventsController < Admin::AdminController
   # GET /admin_events/1/edit
   def edit
     @event = Admin::Event.find(params[:id])
+    if ( @event.slug == nil)
+      @event.slug = @event.to_slug
+    end
   end
 
   # POST /admin_events
