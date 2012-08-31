@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
 
-  before_filter :require_admin, :except => [ :index, :random, :show, :download ]
+  before_filter :require_admin, :except => [ :index, :random, :show, :download, :index_events_slug ]
   layout "general", :except => [:random]
 
   def index

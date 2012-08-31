@@ -53,6 +53,10 @@ class UploadController < ApplicationController
           logger.info photo_exif.date_time
           logger.info photo_exif.exposure_time.to_s
           logger.info photo_exif.f_number.to_f
+          logger.info photo_exif.gps
+#          logger.info photo_exif.gps.latitude
+#          logger.info photo_exif.gps.longitude
+
           exif = Exif.new
           exif.date_time = photo_exif.date_time
           exif.exposure_time = photo_exif.exposure_time.to_s
@@ -82,6 +86,10 @@ class UploadController < ApplicationController
         i_thumb.resize_to_fit!(320,200)
         i_thumb.write(File.join(RAILS_ROOT,'public','images','photos',params[:event_id], @photo.fingerprint+".jpg"))
           
+        i_thumb = Magick::Image.read(Rails.root.join('data',params[:event_id],params[:user_id], @photo.fingerprint )).first
+        i_thumb.resize_to_fit!(800,600)
+        i_thumb.write(File.join(RAILS_ROOT,'public','images','photos',params[:event_id], "800_"+@photo.fingerprint+".jpg"))
+
         #        File.open(Rails.root.join('data',params[:event_id],params[:user_id], @photo.fingerprint ), 'r') do |file|
         #          i_original = Magick::Image.from_blob(file.read)
         #          i_thumb = i_original.first.change_geometry!("#{320}x#{200}") { |cols, rows, img|

@@ -1,0 +1,6 @@
+data/*
+public/images/photos/*
+log/*
+public/uploads/*
+tmp/*
+*.log
